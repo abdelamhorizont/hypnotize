@@ -1,0 +1,1 @@
+command to build on github: npm run deploy

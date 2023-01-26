@@ -7,6 +7,7 @@
     "gatsby"
   ],
   "scripts": {
+    "deploy": "gatsby build --prefix-paths && gh-pages -d public",
     "develop": "gatsby develop",
     "start": "gatsby develop",
     "build": "gatsby build",
@@ -15,9 +16,12 @@
   },
   "dependencies": {
     "gatsby": "^5.4.2",
-    "gatsby-plugin-sass": "^6.4.0",
+    "gatsby-plugin-sass": "^6.5.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "sass": "^1.57.1"
+  },
+  "devDependencies": {
+    "gh-pages": "^4.0.0"
   }
 }

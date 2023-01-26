@@ -1,0 +1,82 @@
+@font-face {
+    font-family: "PPAgrandir-Regular";
+    src        : url('../assets/fonts/PPAgrandir-Regular.woff');
+}
+
+@font-face {
+    font-family: "PPAgrandir-GrandHeavy";
+    src        : url('../assets/fonts/PPAgrandir-GrandHeavy.woff');
+}
+
+body{
+    width: 100vw;
+
+    background-color: #1F1F1F;
+    color: #D6AA40;
+
+    font-family: 'PPAgrandir-Regular';
+    text-transform: uppercase;
+    text-align: center;
+    padding: 1rem;
+}
+
+h1, h2, h3{
+    font-family: "PPAgrandir-GrandHeavy";
+}
+
+h1{
+    margin: 6rem 1rem 2rem 1rem;
+    letter-spacing: 0.05rem;
+}
+
+h2{
+    font-size: 2.5rem;
+    margin-top: -1.4rem;
+    margin-bottom: 1rem;
+}
+
+h3{
+    font-size: 2.5rem;
+    margin: 1rem;
+}
+
+p{
+    text-align: left;
+    text-transform:initial;
+}
+
+div#navigation{
+    position: fixed;
+    top: 1rem;
+
+    display: flex;
+    width: 100vw;
+    // padding: 0.5rem;
+    justify-content: space-between;
+
+    #logo{
+        width: 50%;
+    }
+
+    .icon{
+        height: 1.3rem;
+    }
+}
+
+.icons{
+    img{
+        margin: 0rem 0.5rem;
+    }
+}
+
+#erfolge{
+
+    .erfolg{
+        margin: 1rem 0rem;
+        
+        video{
+            // mix-blend-mode:screen;
+            width: 100%;
+        }
+    }
+}
