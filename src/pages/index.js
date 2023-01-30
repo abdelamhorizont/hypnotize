@@ -14,6 +14,7 @@ import Hava from '../assets/HAVA.jpeg'
 import Biggie from '../assets/Biggie68.jpeg'
 import Amex from '../assets/Amex-Dior.jpeg'
 
+import DardanVideo from '../assets/dardan-video.mp4'
 import Gold from '../assets/Gold.mp4'
 import Platin from '../assets/Platin.mp4'
 
@@ -22,7 +23,7 @@ const IndexPage = () => {
     <>
       <div id="navigation">
         <div><img className="icon" src={ytIcon} alt="youtube Icon" /></div>
-        <img id="logo" src={Logo} alt="Hypnotize Logo" />
+        <div><img id="logo" src={Logo} alt="Hypnotize Logo" /></div>
         <div id="menu"> <img src={menuIcon} alt="Burger Menu Icon" /></div>
       </div>
 
@@ -33,12 +34,71 @@ const IndexPage = () => {
         </p>
       </div>
 
+      {/* <div className="background-video">
+        <video key={DardanVideo} muted autoPlay loop webkit-playsinline="true" playsInline>
+          <source src={DardanVideo} type="video/mp4" />
+        </video>
+      </div> */}
+
       <div id="artists">
         <h1>Artists</h1>
         <div className="artist">
-          <img src={Dardan} alt="Dardan" />
+          <div className="artist-image">
+            <video key={DardanVideo} muted autoPlay loop webkit-playsinline="true" playsInline>
+              <source src={DardanVideo} type="video/mp4" />
+            </video>
+            <img src={Dardan} alt="Dardan" />
+          </div>
+          <h2>Dardan</h2>
+          <div className="icons">
+            <img src={ytIcon} alt="youtube Icon" />
+            <img src={spotifyIcon} alt="Spotify Icon" />
+            <img src={instaIcon} alt="Instagram Icon" />
+          </div>
         </div>
-        <h2>Dardan</h2>
+      </div>
+
+      <div id="erfolge">
+        <h1>Erfolge</h1>
+
+        <div className="grid">
+          <div className="erfolg">
+            <video key={Gold} muted autoPlay loop webkit-playsinline="true" playsInline>
+              <source src={Gold} type="video/mp4" />
+            </video>
+            <h3>Gold</h3>
+            <li>Germany <span>5</span> </li>
+            <li>Austria <span>10+</span>  </li>
+            <li>Switzerland <span>10+</span> </li>
+          </div>
+
+          <div className="erfolg">
+            <video key={Platin} muted autoPlay loop webkit-playsinline="true" playsInline>
+              <source src={Platin} type="video/mp4" />
+            </video>
+            <h3>Platin</h3>
+            <li>Germany <span>5</span> </li>
+            <li>Austria <span>10+</span> </li>
+            <li>Switzerland <span>10+</span> </li>
+          </div>
+        </div>
+      </div>
+
+      <div id="jobs">
+        <h1>Jobs</h1>
+        <div className="job">
+          Assistant Artist Management (m/w/d)
+        </div>
+      </div>
+
+      <div id="kontakt">
+        <h1>Kontakt</h1>
+        <div id="mail"> info@hypnotize-entertainment.de </div>
+      </div>
+
+      <div id="social-media">
+        <h1>Social Media</h1>
+        <img id="logo" src={Logo} alt="Hypnotize Logo" />
         <div className="icons">
           <img src={ytIcon} alt="youtube Icon" />
           <img src={spotifyIcon} alt="Spotify Icon" />
@@ -46,61 +106,18 @@ const IndexPage = () => {
         </div>
       </div>
 
-      <div id="erfolge">
-        <h1>Erfolge</h1>
-
-        <div className="erfolg">
-          <video key={Gold} muted autoPlay loop webkit-playsinline="true" playsInline>
-            <source src={Gold} type="video/mp4" />
-          </video>
-          <h3>Gold</h3>
-          <li>Germany 5</li>
-          <li>Austria 10+</li>
-          <li>Switzerland 10+</li>
+      <div className="meta-menu">
+        <div id="impressum">
+          <h4>
+            <Link>Impressum</Link>
+          </h4>
         </div>
 
-        <div className="erfolg">
-          <video key={Platin} muted autoPlay loop webkit-playsinline="true" playsInline>
-            <source src={Platin} type="video/mp4" />
-          </video>
-          <h3>Platin</h3>
-          <li>Germany 5</li>
-          <li>Austria 10+</li>
-          <li>Switzerland 10+</li>
+        <div id="datenschutz">
+          <h4>
+            <Link>Datenschutz</Link>
+          </h4>
         </div>
-
-
-      </div>
-
-      <div id="jobs">
-        <h1>Jobs</h1>
-        <div className="job">
-          Job
-        </div>
-      </div>
-
-      <div id="kontakt">
-        <h1>Kontakt</h1>
-        Email-adresse
-      </div>
-
-      <div id="social-media">
-        <h1>Social Media</h1>
-        <div className="social">
-          yt
-        </div>
-      </div>
-
-      <div id="impressum">
-        <h4>
-          <Link>Impressum</Link>
-        </h4>
-      </div>
-
-      <div id="datenschutz">
-        <h4>
-          <Link>Datenschutz</Link>
-        </h4>
       </div>
     </>
   )
