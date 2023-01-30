@@ -1,14 +1,30 @@
 @font-face {
     font-family: "PPAgrandir-Regular";
-    src        : url('../assets/fonts/PPAgrandir-Regular.woff');
+    src: url('../assets/fonts/PPAgrandir-Regular.woff');
 }
 
 @font-face {
     font-family: "PPAgrandir-GrandHeavy";
-    src        : url('../assets/fonts/PPAgrandir-GrandHeavy.woff');
+    src: url('../assets/fonts/PPAgrandir-GrandHeavy.woff');
 }
 
-body{
+.collapse {
+    overflow: hidden;
+    height: 0;
+    transition: height 0.5s ease;
+
+    *{
+        margin: 0rem;
+    }
+}
+
+.not-collapsed{
+    overflow:auto;
+    height: auto;
+    transition: height 0.5s ease;
+}
+
+body {
     width: calc(100% - 2rem);
 
     background-color: #1F1F1F;
@@ -18,48 +34,56 @@ body{
     text-transform: uppercase;
     text-align: center;
     margin: 1rem;
+
+    transition: height 0.5s ease;
 }
 
-h1, h2, h3{
+h1,
+h2,
+h3 {
     font-family: "PPAgrandir-GrandHeavy";
 }
 
-h1{
+h1 {
     margin: 6rem 1rem 2rem 1rem;
     letter-spacing: 0.05rem;
+    transition: margin 0.5s ease;
+
 }
 
-h2{
+h2 {
     font-size: 2.5rem;
-    margin-top: -1.4rem;
+    margin-top: -1.8rem;
     margin-bottom: 1rem;
 }
 
-h3{
+h3 {
     font-size: 2.5rem;
     margin: 1rem;
 }
 
-.meta-menu{
+.meta-menu {
     margin-top: 6rem;
     margin-bottom: 2rem;
 
-    h4{
+    h4 {
         margin-top: 1rem;
     }
 }
 
-p{
+p {
     text-align: left;
     font-size: 1.5rem;
+    transition: height 0.5s ease;
 
     // text-transform:initial;
 }
 
-.background-video{
-    video{
+.background-video {
+    video {
         height: 100vh;
     }
+
     position: absolute;
     top: 70vh;
     z-index: -1;
@@ -69,141 +93,117 @@ p{
     opacity: 0.8;
 }
 
-div#navigation{
+div#navigation {
     position: fixed;
     top: 1rem;
 
-    display              : grid;
+    display: grid;
     grid-template-columns: 1fr auto 1fr;
-    
+
     width: calc(100% - 2rem);
 
-    div:first-child{
+    div:first-child {
         justify-self: flex-start;
-    } 
+    }
 
-    div:last-child{
+    div:last-child {
         justify-self: flex-end;
-    } 
+    }
 
-    div{
+    div {
         justify-self: center;
     }
 
-    #logo{
+    #logo {
         width: 50%;
     }
 
-    .icon{
+    .icon {
         height: 1.2rem;
     }
 }
 
-.artist{
-    .artist-image{
-        height: 40vh;
-        overflow: hidden;
-    
-        display: block;
-        justify-content: center;
-        align-items: center;
-    }
-
-    video{
-        height: 100%;
-        width: auto;
-        // margin-left: -5rem;
-        display: none;
-    }
-
-    video:hover{
-        // opacity: 1;
-        // display: block;
-    }
-
-    img{
-        height: 100%;
-        // width: 100%;
-    }
-}
-
-#services{
+#services {
     margin: 12rem 0rem
 }
 
-.icons{
-    img{
+.icons {
+    margin-bottom: 2rem;
+
+    img {
         width: auto;
         margin: 0rem 0.5rem;
     }
 }
 
-#erfolge{
-    .erfolg{
+#erfolge {
+    .erfolg {
         margin: 1rem 0rem;
 
-        video{
+        video {
             width: 100%;
         }
 
-        span{
+        span {
             font-family: "PPAgrandir-GrandHeavy";
         }
     }
 }
 
-.job{
+.job {
     line-height: 1.3rem;
     text-decoration: underline;
     text-underline-offset: 5px;
     text-decoration-thickness: 1px;
 }
 
-#social-media{
-    #logo{
+#social-media {
+    #logo {
         width: 50%;
     }
-    .icons{
+
+    .icons {
         margin: 1rem;
     }
 }
 
 @media screen and (min-width: 720px) {
-    h1{
+    h1 {
         margin-top: 12rem;
     }
 
-    h2{
+    h2 {
         font-size: 5rem;
         margin-top: -2.2rem;
 
     }
-    
-    div#navigation{
+
+    div#navigation {
         width: calc(100% - 2rem);
 
-        #logo{
+        #logo {
             width: 18%;
         }
     }
-    
-    .grid{
+
+    .grid {
         display: flex;
 
-        .erfolg{
+        .erfolg {
             margin: 0rem;
-            video{
+
+            video {
                 height: 50%;
             }
         }
     }
 
-    div#services{
+    div#services {
         margin: 16rem 0rem
     }
 
-    #social-media{
-        #logo{
+    #social-media {
+        #logo {
             width: 14%;
             margin-top: 2rem;
         }

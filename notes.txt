@@ -1,1 +1,6 @@
 command to build on github: npm run deploy
+
+to do:
+- artisst video on hover
+- menu
+- framer motion
