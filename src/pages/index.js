@@ -28,7 +28,7 @@ const IndexPage = () => {
 
   const collapse = menuOpen ? 'collapse' : 'not-collapsed'
   const nomargin = {
-    margin: menuOpen && 1 + 'rem'
+    margin: menuOpen && 0.5 + 'rem'
   }
   return (
     <div className="menu-active">
@@ -47,7 +47,7 @@ const IndexPage = () => {
       </div>
 
       <div style={nomargin} id="services">
-        <h1 style={{marginBottom: menuOpen && 1 + 'rem'}}>Services</h1>
+      <a onClick={() => setmenuOpen(false)} href="#services"><h1 style={{marginBottom: menuOpen && 0.5 + 'rem'}}>Services</h1></a> 
         <p className={collapse}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, porro veniam! Laboriosam velit quas quibusdam est non at tenetur adipisci ut quasi cum, aut doloribus dolor animi dolorem, magnam incidunt!
         </p>
@@ -60,7 +60,7 @@ const IndexPage = () => {
       </div> */}
 
       <div id="artists">
-        <h1 style={nomargin}>Artists</h1>
+        <a onClick={() => setmenuOpen(false)} href="#artists"><h1 style={nomargin}>Artists</h1></a> 
         <div className={collapse}>
         <Artist name="Dardan" image={Dardan} video={DardanVideo} icons={icons} />
         <Artist name="Hava" image={Hava} video={DardanVideo} icons={icons} />
@@ -71,7 +71,7 @@ const IndexPage = () => {
 
 
       <div id="erfolge">
-        <h1 style={nomargin}>Erfolge</h1>
+      <a onClick={() => setmenuOpen(false)} href="#erfolge"><h1 style={nomargin}>Erfolge</h1></a> 
         <div className={collapse}>
         <div className="grid">
           <div className="erfolg">
@@ -98,7 +98,7 @@ const IndexPage = () => {
       </div>
 
       <div id="jobs">
-        <h1 style={nomargin}>Jobs</h1>
+      <a onClick={() => setmenuOpen(false)} href="#jobs"><h1 style={nomargin}>Jobs</h1></a> 
         <div className={collapse}>
         <div className="job">
           Assistant Artist Management (m/w/d)
@@ -107,14 +107,14 @@ const IndexPage = () => {
       </div>
 
       <div id="kontakt">
-        <h1 style={nomargin}>Kontakt</h1>
+      <a onClick={() => setmenuOpen(false)} href="#kontakt"><h1 style={nomargin}>Kontakt</h1></a> 
         <div className={collapse}>
         <div id="mail"> info@hypnotize-entertainment.de </div>
         </div>
       </div>
 
       <div id="social-media">
-        <h1 style={nomargin}>Social Media</h1>
+      <a onClick={() => setmenuOpen(false)} href="#social-media"><h1 style={nomargin}>Social Media</h1></a> 
         <div className={collapse}>
         <img id="logo" src={Logo} alt="Hypnotize Logo" />
         <div className="icons">
