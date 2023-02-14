@@ -1,12 +1,21 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
+import { motion, useInView } from "framer-motion"
 
 import './artist.scss'
 
 export default function Artist({ name, image, video, icons }) {
   const [videoOpacity, setvideoOpacity] = useState(0)
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true });
+
+  const inViewAnim = {
+    transform: isInView ? "none" : "translateY(100px)",
+    opacity: isInView ? "1" : "0",
+    transition: "all 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
+  }
 
   return (
-    <div className="artist" 
+    <div ref={ref} className="artist" style={inViewAnim}
     onMouseEnter={() => setvideoOpacity(1)}
     onMouseLeave={() => setvideoOpacity(0)}
     >
@@ -29,7 +38,9 @@ export default function Artist({ name, image, video, icons }) {
           {
             icons?.map(icon => {
               return (
-                <img src={icon} alt="youtube" />
+                <a href="https://www.youtube.com/@HypnotizeEntertainment" target="_blank">
+                  <img src={icon} alt="youtube" />
+                </a>
               )
             })
           }
