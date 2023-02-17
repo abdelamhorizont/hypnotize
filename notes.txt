@@ -2,5 +2,3 @@ command to build on github: npm run deploy
 
 to do:
 - backend
-- video autoplay inView
-- custom cursor

@@ -26,6 +26,8 @@ import Platin from '../assets/Platin.mp4'
 import { motion, useInView } from "framer-motion"
 
 const IndexPage = () => {
+  const [mobile, setMobile] = useState(false)
+  const [logoAnimSize, setlogoAnimSize] = useState(2)
   const icons = [ytIcon, spotifyIcon, instaIcon]
 
   const [menuOpen, setmenuOpen] = useState(false)
@@ -37,20 +39,20 @@ const IndexPage = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true });
 
+  useEffect(() => {
+    const isBrowser = () => typeof window !== `undefined`;
+    window.addEventListener('resize', setMobile(isBrowser() && window.screen.width < 720));
+  }, [])
+
+
+  useEffect(() => {
+    mobile ? setlogoAnimSize(2) : setlogoAnimSize(5)
+  }, [mobile])
+
+
   const collapseVariants = {
     open: { maxHeight: "100vh" },
     close: { maxHeight: "0vh" }
-  }
-
-  const inViewVariants = {
-    anim: { translateY: "100px" },
-    none: { translateY: "none" }
-  }
-
-  const inViewAnim = {
-    transform: isInView ? "none" : "translateY(50px)",
-    opacity: isInView ? "1" : "0",
-    transition: "all 0.5s cubic-bezier(0.17, 0.55, 0.55, 1) 0.5s"
   }
 
   return (
@@ -61,25 +63,44 @@ const IndexPage = () => {
         </a> </div>
 
         <motion.div
-          initial={{ scale: 5, y: "40vh" }}
+          initial={{ scale: logoAnimSize, y: "40vh" }}
           animate={{ scale: 1, y: "0vh" }}
-          transition={{ease: "easeInOut", duration: 0.5, delay: 2 }}
+          transition={{ ease: "easeInOut", duration: 0.5, delay: 1 }}
         ><Link to='/'> <img id="logo" src={Logo} alt="Hypnotize Logo" /></Link></motion.div>
 
-        <div className="menu-buttons">
-          <li id="menu" key="openButton" className="menuButton" style={{ display: !menuOpen ? "inline" : "none" }} onClick={() => setmenuOpen(true)}>
-            <img className="icon" src={menuIcon} alt="Burger Menu Icon" /></li>
-          <li id="menu" key="closeButton" className="menuButton" style={{ display: menuOpen ? "inline" : "none" }} onClick={() => setmenuOpen(false)}>
-            <img className="icon" src={closeMenuIcon} alt="Burger Menu Icon" /></li>
+        <div className="menu-button-lang">
+
+          {!mobile &&
+            <div className="lang">
+              <li className="active">de</li>
+              <li>en</li>
+            </div>
+          }
+          <div className="menu-buttons">
+            <li id="menu" key="openButton" className="menuButton" style={{ display: !menuOpen ? "inline" : "none" }} onClick={() => setmenuOpen(true)}>
+              <img className="icon" src={menuIcon} alt="Burger Menu Icon" /></li>
+            <li id="menu" key="closeButton" className="menuButton" style={{ display: menuOpen ? "inline" : "none" }} onClick={() => setmenuOpen(false)}>
+              <img className="icon" src={closeMenuIcon} alt="Burger Menu Icon" /></li>
+          </div>
         </div>
       </div>
 
-      <motion.div style={{ margin: menuOpen && 14 + 'rem 0.5rem 0.5rem 0.5rem' }} id="services"
+
+      {mobile &&
+      <div className="mobile-lang">
+        <div className="lang">
+          <li className="active">de</li>
+          <li>en</li>
+        </div>
+      </div>
+      }
+
+      <motion.div style={{ margin: menuOpen && (mobile? '5' : "14") + 'rem 0.5rem 0.5rem 0.5rem' }} id="services"
         initial={{ opacity: "0" }}
         animate={{ opacity: "1" }}
-        transition={{ duration: 0.5, delay: 2 }}
+        transition={{ duration: 0.5, delay: 1.1 }}
       >
-        <a onClick={() => setmenuOpen(false)} href="#services"><h1 style={{ marginBottom: menuOpen && 0.5 + 'rem' }}>Services</h1></a>
+        <a onClick={() => setmenuOpen(false)} href="#services"><h1 style={{ marginBottom: menuOpen && 0 + 'rem' }}>Services</h1></a>
         <p className={collapse}>
           Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, porro veniam! Laboriosam velit quas quibusdam est non at tenetur adipisci ut quasi cum, aut doloribus dolor animi dolorem, magnam incidunt!
         </p>
@@ -94,7 +115,7 @@ const IndexPage = () => {
       <motion.div id="artists"
         initial={{ opacity: "0" }}
         animate={{ opacity: "1" }}
-        transition={{ duration: 0.5, delay: 2 }}
+        transition={{ duration: 0.5, delay: 1 }}
       >
         <a onClick={() => setmenuOpen(false)} href="#artists"><h1 style={nomargin}>Artists</h1></a>
         <div className={collapse}>
