@@ -1,4 +1,1 @@
 command to build on github: npm run deploy
-
-to do:
-- backend

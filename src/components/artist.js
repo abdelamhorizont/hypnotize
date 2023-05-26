@@ -1,9 +1,10 @@
 import React, { useState, useRef, useEffect } from 'react'
+import { GatsbyImage } from 'gatsby-plugin-image'
 import { motion, useInView } from "framer-motion"
 
 import './artist.scss'
 
-export default function Artist({ name, image, video, icons }) {
+export default function Artist({ name, image, video, icons, links }) {
   const [mobile, setMobile] = useState(false)
 
   const [videoOpacity, setvideoOpacity] = useState(0)
@@ -26,34 +27,35 @@ export default function Artist({ name, image, video, icons }) {
 
   useEffect(() => {
 
-    isInView ? setTimeout(function() {
-        setvideoOpacity(1)
-      }, 2000)
+    isInView ? setTimeout(function () {
+      setvideoOpacity(1)
+    }, 2000)
       :
       setvideoOpacity(0)
 
     // mobile && (isInView ? setvideoOpacity(1) : setvideoOpacity(0))
 
   }, [isInView])
-  
 
-  
+
+  // const image = getImage(image)
 
   return (
     <div ref={ref} className="artist" style={inViewAnim}
-    onMouseEnter={() => setvideoOpacity(1)}
-    onMouseLeave={() => setvideoOpacity(0)}
+      onMouseEnter={() => setvideoOpacity(1)}
+      onMouseLeave={() => setvideoOpacity(0)}
     >
       <div className="artist-image-wrapper">
         <div className="artist-image">
           {video &&
-            <video key={video} muted autoPlay loop webkit-playsinline="true" playsInline
+            <video key={video.url} muted autoPlay loop webkit-playsinline="true" playsInline
               style={{ opacity: videoOpacity }}
             >
-              <source src={video} type="video/mp4" />
+              <source src={video.url} type="video/mp4" />
             </video>
           }
-          <img src={image} alt="Dardan" />
+          {/* <img src={image} alt="Dardan" /> */}
+          <GatsbyImage image={image.gatsbyImageData} alt={name} />
         </div>
       </div>
 
@@ -61,9 +63,9 @@ export default function Artist({ name, image, video, icons }) {
         <h2>{name}</h2>
         <div className="icons">
           {
-            icons?.map(icon => {
+            icons?.map((icon, index) => {
               return (
-                <a href="https://www.youtube.com/@HypnotizeEntertainment" target="_blank">
+                <a href={links[index]} target="_blank">
                   <img src={icon} alt="youtube" />
                 </a>
               )

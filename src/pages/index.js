@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect } from "react"
 import { graphql, Link } from "gatsby"
+import { StructuredText } from 'react-datocms';
 
 import Artist from "../components/artist"
 import Job from "../components/job"
@@ -14,18 +15,11 @@ import spotifyIcon from '../assets/spotify.svg'
 import menuIcon from '../assets/menu.svg'
 import closeMenuIcon from '../assets/close-menu.svg'
 
-import Dardan from '../assets/Dardan.jpg'
-import Hava from '../assets/HAVA.jpg'
-import Biggie from '../assets/Biggie68.jpg'
-import Amex from '../assets/Amex-Dior.jpg'
-
-import DardanVideo from '../assets/dardan-video.mp4'
-import Gold from '../assets/Gold.mp4'
-import Platin from '../assets/Platin.mp4'
-
 import { motion, useInView } from "framer-motion"
 
-const IndexPage = () => {
+const IndexPage = ({ data }) => {
+  const [lang, setLang] = useState('de')
+
   const [mobile, setMobile] = useState(false)
   const [logoAnimSize, setlogoAnimSize] = useState(2)
   const icons = [ytIcon, spotifyIcon, instaIcon]
@@ -56,6 +50,22 @@ const IndexPage = () => {
     close: { maxHeight: "0vh" }
   }
 
+  const bgVideoStyle = {
+    mixBlendMode: "color-dodge",
+    filter: "blur(60px)",
+    opacity: "0.8",
+  }
+
+  const content = data.datoCmsHomepage
+  const service = data.datoCmsHomepage._allServicesLocales.filter(node => node.locale == lang)[0].value
+  const impressum = data.datoCmsHomepage._allImpressumLocales.filter(node => node.locale == lang)[0].value
+  const datenschutz = data.datoCmsHomepage._allDatenschutzLocales.filter(node => node.locale == lang)[0].value
+  const jobs = data.datoCmsHomepage._allJobsLocales.filter(node => node.locale == lang)[0].value
+  const artists = data.allDatoCmsArtist
+  const erfolge = data.allDatoCmsErfolg
+  const kontakt = data.allDatoCmsKontakt.nodes[0]
+  const bgVideo = data.allDatoCmsBackgroundVideo.nodes[0]
+
   return (
     <div ref={ref} className="menu-active">
       <div id="navigation">
@@ -71,12 +81,12 @@ const IndexPage = () => {
 
         <div className="menu-button-lang">
 
-          {!mobile &&
+          {/* {!mobile &&
             <div className="lang">
               <li className="active">de</li>
               <li>en</li>
             </div>
-          }
+          } */}
           <div className="menu-buttons">
             <li id="menu" key="openButton" className="menuButton" style={{ display: !menuOpen ? "inline" : "none" }} onClick={() => setmenuOpen(true)}>
               <img className="icon" src={menuIcon} alt="Burger Menu Icon" /></li>
@@ -87,11 +97,11 @@ const IndexPage = () => {
       </div>
 
 
-      {mobile &&
+      {menuOpen &&
         <div className="mobile-lang">
           <div className="lang">
-            <li className="active">de</li>
-            <li>en</li>
+            <button className={lang === 'de' && "active"} onClick={() => setLang('de')}>de</button>
+            <button className={lang === 'en' && "active"} onClick={() => setLang('en')}>en</button>
           </div>
         </div>
       }
@@ -103,15 +113,18 @@ const IndexPage = () => {
       >
         <a onClick={() => setmenuOpen(false)} href="#services"><h1 style={{ marginBottom: menuOpen && 0 + 'rem' }}>Services</h1></a>
         <p className={collapse}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, porro veniam! Laboriosam velit quas quibusdam est non at tenetur adipisci ut quasi cum, aut doloribus dolor animi dolorem, magnam incidunt!
+          <StructuredText data={service} />
         </p>
       </motion.div>
 
-      {/* <div className="background-video">
-        <video key={DardanVideo} muted autoPlay loop webkit-playsinline="true" playsInline>
-          <source src={DardanVideo} type="video/mp4" />
-        </video>
-      </div> */}
+      {
+        bgVideo &&
+        <div className={`background-video ${bgVideo.blur && 'blur'}`}>
+          <video key={bgVideo.backgroundVideo?.url} muted autoPlay loop webkit-playsinline="true" playsInline>
+            <source src={bgVideo.backgroundVideo?.url} type="video/mp4" />
+          </video>
+        </div>
+      }
 
       <motion.div id="artists"
         initial={{ opacity: "0" }}
@@ -120,37 +133,46 @@ const IndexPage = () => {
       >
         <a onClick={() => setmenuOpen(false)} href="#artists"><h1 style={nomargin}>Artists</h1></a>
         <div className={collapse}>
-          <Artist name="Dardan" image={Dardan} video={DardanVideo} icons={icons} />
-          <Artist name="Hava" image={Hava} video={DardanVideo} icons={icons} />
-          <Artist name="Biggie68" image={Biggie} video={DardanVideo} icons={icons} />
-          <Artist name="Amex-Dior" image={Amex} video={DardanVideo} icons={icons} />
+          {
+            artists.edges.map(artist => {
+              // const [name, photo] = artist
+              return (
+                <Artist
+                  name={artist.node.name}
+                  image={artist.node.photo}
+                  video={artist.node.video}
+                  links={[artist.node.youtubeLink, artist.node.spotifyLink, artist.node.instagramLink]}
+                  icons={icons} />
+              )
+            })
+          }
         </div>
       </motion.div>
 
 
       <div id="erfolge">
-        <a onClick={() => setmenuOpen(false)} href="#erfolge"><h1 style={nomargin}>Erfolge</h1></a>
+        <a onClick={() => setmenuOpen(false)} href="#erfolge"><h1 style={nomargin}>{lang == "de" ? "Erfolge" : "Achievements"}</h1></a>
         <div className={collapse}>
           <div className="grid">
-            <div className="erfolg">
-              <video key={Gold} muted autoPlay loop webkit-playsinline="true" playsInline>
-                <source src={Gold} type="video/mp4" />
-              </video>
-              <h3>Gold</h3>
-              <li>Germany <span>5</span> </li>
-              <li>Austria <span>10+</span>  </li>
-              <li>Switzerland <span>10+</span> </li>
-            </div>
-
-            <div className="erfolg">
-              <video key={Platin} muted autoPlay loop webkit-playsinline="true" playsInline>
-                <source src={Platin} type="video/mp4" />
-              </video>
-              <h3>Platin</h3>
-              <li>Germany <span>5</span> </li>
-              <li>Austria <span>10+</span> </li>
-              <li>Switzerland <span>10+</span> </li>
-            </div>
+            {
+              erfolge.nodes.map(erfolg => {
+                return (
+                  <div className="erfolg">
+                    <video key={erfolg.titel} muted autoPlay loop webkit-playsinline="true" playsInline>
+                      <source src={erfolg.video.url} type="video/mp4" />
+                    </video>
+                    <h3>{erfolg.titel}</h3>
+                    {
+                      erfolg.erfolgListe.map(erfolg => {
+                        return (
+                          <li>{erfolg.ort} <span>{erfolg.anzahl}</span> </li>
+                        )
+                      })
+                    }
+                  </div>
+                )
+              })
+            }
           </div>
         </div>
       </div>
@@ -158,16 +180,24 @@ const IndexPage = () => {
       <div id="jobs">
         <a onClick={() => setmenuOpen(false)} href="#jobs"><h1 style={nomargin}>Jobs</h1></a>
         <div className={collapse}>
-          <Job />
-          <Job />
-          <Job />
+          {
+            jobs.map(job => {
+              return (
+                <Job data={job} />
+              )
+            })
+          }
         </div>
       </div>
 
       <div id="kontakt">
-        <a onClick={() => setmenuOpen(false)} href="#kontakt"><h1 style={nomargin}>Kontakt</h1></a>
+        <a onClick={() => setmenuOpen(false)} href="#kontakt"><h1 style={nomargin}>{lang == "de" ? "Kontakt" : "Contact"}</h1></a>
         <div className={collapse}>
-          <div id="mail"> <a href="mailto:info@hypnotize-entertainment.de">info@hypnotize-entertainment.de</a> </div>
+          <p>
+            <StructuredText data={kontakt.adresse} />
+          </p>
+
+          <div id="mail"> <a href={'mailto:' + kontakt.eMail}>{kontakt.eMail}</a> </div>
         </div>
       </div>
 
@@ -175,9 +205,15 @@ const IndexPage = () => {
         <a onClick={() => setmenuOpen(false)} href="#social-media"><h1 style={nomargin}>Social Media</h1></a>
         <div className={collapse}>
           <div className="icons">
-            <img src={ytIcon} alt="youtube Icon" />
-            <img src={spotifyIcon} alt="Spotify Icon" />
-            <img src={instaIcon} alt="Instagram Icon" />
+            {content.socialMedia[0]?.youtubeLink &&
+              <a href={content.socialMedia[0]?.youtubeLink} target="_blank"> <img src={ytIcon} alt="youtube Icon" /> </a>
+            }
+            {content.socialMedia[0]?.spotifyLink &&
+              <a href={content.socialMedia[0]?.spotifyLink} target="_blank"> <img src={spotifyIcon} alt="Spotify Icon" /> </a>
+            }
+            {content.socialMedia[0]?.instagramLink &&
+              <a href={content.socialMedia[0]?.instagramLink} target="_blank"> <img src={instaIcon} alt="Instagram Icon" /> </a>
+            }
           </div>
           <img id="logo" src={Logo} alt="Hypnotize Logo" />
         </div>
@@ -193,7 +229,7 @@ const IndexPage = () => {
             }
           }}
             href="#impressum">
-            <h4>Impressum</h4></a>
+            <h4>{lang == "de" ? "Impressum" : "Imprint"}</h4></a>
           <motion.div
             style={{ overflow: 'hidden' }}
             initial={{ maxHeight: 0 }}
@@ -203,25 +239,7 @@ const IndexPage = () => {
           >
             <div className='imprint'>
               <p>
-                Et fugiat tempor eu pariatur non incididunt velit adipisicing sit fugiat eu. Aute pariatur ea tempor adipisicing. Cillum sit culpa id irure irure ad ullamco. Ad nulla occaecat voluptate labore in qui. Sint aliquip dolor in deserunt qui commodo nulla consequat veniam ad non id eiusmod. Ex tempor aute dolore nisi duis eu minim do sunt officia fugiat fugiat deserunt in.
-
-                Ea consectetur aliqua deserunt id Lorem. Reprehenderit do voluptate veniam nostrud ex deserunt culpa consectetur proident. Commodo officia consequat occaecat ullamco dolore nisi in voluptate ipsum magna sunt et.
-
-                Ut adipisicing elit incididunt qui non commodo nostrud. Dolor consectetur ullamco sint sint ad consequat sit ea deserunt nisi. Ad irure id laborum eu duis ea id aute occaecat mollit proident consequat ut. Ullamco culpa fugiat consequat velit proident. In Lorem eu consectetur aliquip cillum culpa proident. Excepteur excepteur cupidatat ea minim ullamco minim dolor sunt Lorem elit.
-
-                Ullamco amet magna sint anim. Excepteur proident do aliquip sint nulla aliquip velit fugiat commodo ut. Ea ad dolor consectetur deserunt reprehenderit anim culpa qui est fugiat. Aliquip do commodo consequat sunt nostrud non fugiat sint velit nisi duis dolore. In Lorem nulla pariatur tempor duis esse quis in. Reprehenderit fugiat mollit minim laborum cupidatat. Reprehenderit id do voluptate cillum consequat pariatur do id veniam eiusmod duis cupidatat reprehenderit.
-
-                Ut et Lorem ut ut id minim cillum officia pariatur occaecat id reprehenderit cupidatat proident. Quis officia ea sint ea laboris laboris esse ad do ad. Dolor cupidatat voluptate minim minim nisi culpa id in eiusmod cupidatat ex sint dolore sunt. Excepteur deserunt deserunt reprehenderit velit ipsum laboris eiusmod non aute.
-
-                Adipisicing veniam sint fugiat voluptate. Esse ipsum laborum aliqua adipisicing sint sit incididunt ullamco. Est esse non voluptate non tempor ut esse exercitation eiusmod aute eiusmod. Eiusmod pariatur sint minim irure esse ut exercitation non. Velit sit do consectetur ex consequat. Dolore nisi velit ad non anim veniam ut elit occaecat sit exercitation culpa.
-
-                Sunt pariatur cillum cupidatat ipsum tempor dolore et adipisicing in. Consectetur consequat velit pariatur sit proident eu adipisicing consectetur ad veniam nulla laboris consequat Lorem. Eiusmod mollit amet amet anim proident voluptate aliquip cupidatat anim. Anim incididunt culpa id est nostrud in aliquip aliqua ea laborum commodo nulla aliquip. Id velit commodo pariatur est quis adipisicing ullamco. Sit eu enim eu dolore. Ex aute esse ea proident sint.
-
-                Magna nostrud consectetur consequat nulla consequat ex. Aliqua laborum exercitation reprehenderit nisi ea. Enim aliqua dolor in sit duis veniam duis cupidatat esse exercitation irure. Culpa ex est in proident in id qui do officia est veniam eiusmod anim. Cillum aliquip sit consequat aliquip cupidatat ullamco occaecat labore.
-
-                Qui et exercitation quis nulla dolor ex esse veniam labore quis adipisicing quis. Aute fugiat ut consequat incididunt pariatur aute commodo culpa minim nisi id. Ipsum nisi nisi sint duis. Tempor est ad ea mollit et nostrud amet ex laborum tempor occaecat dolore nisi et. Labore cillum in consequat sint anim pariatur esse ut eu.
-
-                Lorem in consequat labore excepteur incididunt elit officia dolor sunt laboris magna. Proident non non labore in do enim nisi. Esse pariatur deserunt nisi id cupidatat cupidatat adipisicing. Amet laborum ad excepteur velit aliquip anim nulla adipisicing duis elit aliqua ad Lorem. Sunt incididunt ut tempor occaecat. Ea minim Lorem quis ut aliqua ad aliqua culpa esse commodo in est. Minim ea occaecat ullamco ut nostrud nulla incididunt.
+                <StructuredText data={impressum} />
               </p>
             </div>
           </motion.div>
@@ -236,7 +254,7 @@ const IndexPage = () => {
             }
           }}
             href="#datenschutz">
-            <h4>Datenschutz</h4></a>
+            <h4>{lang == "de" ? "Datenschutz" : "Privacy Policy"}</h4></a>
           <motion.div
             style={{ overflow: 'hidden' }}
             initial={{ maxHeight: 0 }}
@@ -246,25 +264,7 @@ const IndexPage = () => {
           >
             <div className='privacy'>
               <p>
-                Et fugiat tempor eu pariatur non incididunt velit adipisicing sit fugiat eu. Aute pariatur ea tempor adipisicing. Cillum sit culpa id irure irure ad ullamco. Ad nulla occaecat voluptate labore in qui. Sint aliquip dolor in deserunt qui commodo nulla consequat veniam ad non id eiusmod. Ex tempor aute dolore nisi duis eu minim do sunt officia fugiat fugiat deserunt in.
-
-                Ea consectetur aliqua deserunt id Lorem. Reprehenderit do voluptate veniam nostrud ex deserunt culpa consectetur proident. Commodo officia consequat occaecat ullamco dolore nisi in voluptate ipsum magna sunt et.
-
-                Ut adipisicing elit incididunt qui non commodo nostrud. Dolor consectetur ullamco sint sint ad consequat sit ea deserunt nisi. Ad irure id laborum eu duis ea id aute occaecat mollit proident consequat ut. Ullamco culpa fugiat consequat velit proident. In Lorem eu consectetur aliquip cillum culpa proident. Excepteur excepteur cupidatat ea minim ullamco minim dolor sunt Lorem elit.
-
-                Ullamco amet magna sint anim. Excepteur proident do aliquip sint nulla aliquip velit fugiat commodo ut. Ea ad dolor consectetur deserunt reprehenderit anim culpa qui est fugiat. Aliquip do commodo consequat sunt nostrud non fugiat sint velit nisi duis dolore. In Lorem nulla pariatur tempor duis esse quis in. Reprehenderit fugiat mollit minim laborum cupidatat. Reprehenderit id do voluptate cillum consequat pariatur do id veniam eiusmod duis cupidatat reprehenderit.
-
-                Ut et Lorem ut ut id minim cillum officia pariatur occaecat id reprehenderit cupidatat proident. Quis officia ea sint ea laboris laboris esse ad do ad. Dolor cupidatat voluptate minim minim nisi culpa id in eiusmod cupidatat ex sint dolore sunt. Excepteur deserunt deserunt reprehenderit velit ipsum laboris eiusmod non aute.
-
-                Adipisicing veniam sint fugiat voluptate. Esse ipsum laborum aliqua adipisicing sint sit incididunt ullamco. Est esse non voluptate non tempor ut esse exercitation eiusmod aute eiusmod. Eiusmod pariatur sint minim irure esse ut exercitation non. Velit sit do consectetur ex consequat. Dolore nisi velit ad non anim veniam ut elit occaecat sit exercitation culpa.
-
-                Sunt pariatur cillum cupidatat ipsum tempor dolore et adipisicing in. Consectetur consequat velit pariatur sit proident eu adipisicing consectetur ad veniam nulla laboris consequat Lorem. Eiusmod mollit amet amet anim proident voluptate aliquip cupidatat anim. Anim incididunt culpa id est nostrud in aliquip aliqua ea laborum commodo nulla aliquip. Id velit commodo pariatur est quis adipisicing ullamco. Sit eu enim eu dolore. Ex aute esse ea proident sint.
-
-                Magna nostrud consectetur consequat nulla consequat ex. Aliqua laborum exercitation reprehenderit nisi ea. Enim aliqua dolor in sit duis veniam duis cupidatat esse exercitation irure. Culpa ex est in proident in id qui do officia est veniam eiusmod anim. Cillum aliquip sit consequat aliquip cupidatat ullamco occaecat labore.
-
-                Qui et exercitation quis nulla dolor ex esse veniam labore quis adipisicing quis. Aute fugiat ut consequat incididunt pariatur aute commodo culpa minim nisi id. Ipsum nisi nisi sint duis. Tempor est ad ea mollit et nostrud amet ex laborum tempor occaecat dolore nisi et. Labore cillum in consequat sint anim pariatur esse ut eu.
-
-                Lorem in consequat labore excepteur incididunt elit officia dolor sunt laboris magna. Proident non non labore in do enim nisi. Esse pariatur deserunt nisi id cupidatat cupidatat adipisicing. Amet laborum ad excepteur velit aliquip anim nulla adipisicing duis elit aliqua ad Lorem. Sunt incididunt ut tempor occaecat. Ea minim Lorem quis ut aliqua ad aliqua culpa esse commodo in est. Minim ea occaecat ullamco ut nostrud nulla incididunt.
+                <StructuredText data={datenschutz} />
               </p>
             </div>
           </motion.div>
@@ -277,3 +277,88 @@ const IndexPage = () => {
 export default IndexPage
 
 export const Head = () => <title>Hypnotize</title>
+
+
+export const query = graphql`
+{
+    datoCmsHomepage {
+      _allServicesLocales {
+        locale
+        value {
+          value
+        }
+      }
+      _allJobsLocales {
+        locale
+        value {
+          eMail
+          titel
+          text {
+            value
+          }
+        }
+      }
+      _allImpressumLocales {
+        locale
+        value {
+          value
+        }
+      }
+      _allDatenschutzLocales {
+        locale
+        value {
+          value
+        }
+      }
+      socialMedia {
+        instagramLink
+        spotifyLink
+        youtubeLink
+      }
+    }
+    allDatoCmsBackgroundVideo {
+      nodes {
+        blur
+        backgroundVideo {
+          url
+        }
+      }
+    }
+    allDatoCmsArtist(sort: {meta: {createdAt: ASC}}) {
+      edges {
+        node {
+          name
+          photo {
+            gatsbyImageData
+          }
+          video {
+            url
+          }
+          spotifyLink
+          youtubeLink
+          instagramLink
+        }
+      }
+    }
+    allDatoCmsErfolg(sort: {meta: {createdAt: ASC}}) {
+      nodes {
+        titel
+        video {
+          url
+        }
+        erfolgListe {
+          ort
+          anzahl
+        }
+      }
+    }
+    allDatoCmsKontakt {
+      nodes {
+        adresse {
+          value
+        }
+        eMail
+      }
+    }
+  }
+`

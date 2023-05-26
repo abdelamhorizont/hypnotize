@@ -15,11 +15,13 @@
 
             video {
                 position: absolute;
+                z-index: 2;
 
                 height: 100%;
-                // opacity: 0.6;
-                margin-left: -5rem;
-                // mix-blend-mode:lighten;
+                width: 100%;
+                object-fit: cover;
+                object-position: 50% 50%;
+
                 transition: opacity 0.5s ease;
             }
 
@@ -37,20 +39,11 @@
         flex-wrap: wrap;
         justify-content: center;
 
-
         .artist-image-wrapper { 
             
             .artist-image {
                 width: 25vw;
                 
-                video {
-                    position: absolute;
-    
-                    height: 100%;
-                    // opacity: 0.6;
-                    margin-left: -18rem;
-                }
-    
                 img {
                     width: 25vw;
                 }
