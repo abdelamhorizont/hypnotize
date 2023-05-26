@@ -31,7 +31,10 @@ export default function Artist({ name, image, video, icons, links }) {
       setvideoOpacity(1)
     }, 2000)
       :
-      setvideoOpacity(0)
+      !isInView ?
+        setvideoOpacity(0)
+        :
+        setvideoOpacity(0)
 
     // mobile && (isInView ? setvideoOpacity(1) : setvideoOpacity(0))
 
