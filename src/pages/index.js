@@ -340,7 +340,10 @@ export const query = graphql`
         }
       }
     }
-    allDatoCmsErfolg(sort: {meta: {createdAt: ASC}}) {
+    allDatoCmsErfolg(
+      sort: {meta: {createdAt: ASC}}
+      limit: 2
+    ) {      
       nodes {
         titel
         video {

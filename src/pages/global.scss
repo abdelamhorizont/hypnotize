@@ -326,7 +326,7 @@ div#navigation {
     .mail{
         text-align: left;
         margin: 1rem 0rem;
-        
+
         a{
             opacity: 0.8;
         }
@@ -367,7 +367,7 @@ div#navigation {
         // width: calc(100% - 2rem);
         display: grid;
         grid-template-columns: 1fr 1fr;
-        height: 85vh;
+        max-height: 385vh;
         overflow: hidden;
 
         .erfolg {
