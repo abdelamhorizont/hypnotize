@@ -10,7 +10,7 @@ export default function Job({data}) {
     const textCollapse = textOpen ? 'not-collapsed' : 'collapse'
 
     const collapseVariants = {
-        open: { maxHeight: "100vh" },
+        open: { maxHeight: "300vh" },
         close: { maxHeight: "0vh" }
     }
 
@@ -31,7 +31,7 @@ export default function Job({data}) {
                 transition={{ duration: 0.5 }}
             >
                 <p> <StructuredText data={data.text} /> </p>
-                <div id="mail"> <a href={'mailto:' + data.eMail}>{data.eMail}</a> </div>
+                <div className="mail"> <a href={'mailto:' + data.eMail}>{data.eMail}</a> </div>
             </motion.div>
         </div>
     )

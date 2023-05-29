@@ -46,7 +46,7 @@ const IndexPage = ({ data }) => {
 
 
   const collapseVariants = {
-    open: { maxHeight: "100vh" },
+    open: { maxHeight: "300vh" },
     close: { maxHeight: "0vh" }
   }
 

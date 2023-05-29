@@ -322,6 +322,15 @@ div#navigation {
         // word-break: break-word;
         white-space: pre-line;
     }
+    
+    .mail{
+        text-align: left;
+        margin: 1rem 0rem;
+        
+        a{
+            opacity: 0.8;
+        }
+    }
 
 }
 
